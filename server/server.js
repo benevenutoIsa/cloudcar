@@ -15,10 +15,12 @@ app.use((req, res, next) => {
 });
 
 // conectando ao MySQL
-const sequelize = new Sequelize('cloudcar_db', 'root', '8169', {
-  host: 'localhost',
-  dialect: 'mysql'
+const sequelize = new Sequelize(process.env.MYSQL_URL, {
+  dialect: 'mysql',
+  dialectModule: require('mysql2'),
+  logging: false
 });
+
 // Testar conexão
 sequelize.authenticate()
   .then(() => {
@@ -365,7 +367,9 @@ app.post('/api/vendas', async (req, res) => {
 
 
 
-// Servidor Rodando
-app.listen(5000, () => {
-  console.log('Servidor rodando em http://localhost:5000');
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
+
