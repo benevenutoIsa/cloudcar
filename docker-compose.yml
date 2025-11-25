@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: cloudcar-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 8169
+      MYSQL_DATABASE: cloudcar_db
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+  server:
+    build: ./server
+    container_name: cloudcar-server
+    restart: always
+    ports:
+      - "5000:5000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_HOST: mysql
+      DB_USER: user
+      DB_PASSWORD: user123
+      DB_NAME: cloudcar
+
+  client:
+    build: ./client
+    container_name: cloudcar-client
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - server
+
+volumes:
+  mysql_data:
