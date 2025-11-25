@@ -8,7 +8,7 @@ app.use(express.json());
 
 // permitir que o React (porta 3000) se conecte a este servidor
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+  res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   next();
@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 
 // conectando ao MySQL
 const sequelize = new Sequelize('cloudcar_db', 'root', '8169', {
-  host: 'localhost',
+  host: 'mysql',
   dialect: 'mysql'
 });
 // Testar conexão
@@ -366,6 +366,7 @@ app.post('/api/vendas', async (req, res) => {
 
 
 // Servidor Rodando
-app.listen(5000, () => {
-  console.log('Servidor rodando em http://localhost:5000');
+app.listen(5000, '0.0.0.0', () => {
+  console.log('Servidor rodando na porta 5000');
 });
+
