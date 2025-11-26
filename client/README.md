@@ -2,6 +2,9 @@
 
 Site completo e moderno de concessionária de carros, desenvolvido com React e Tailwind CSS.
 
+➡️ O projeto também está em um container Docker com toda a aplicação. Criamos uma máquina virtual na nuvem da Oracle e subimos a aplicação através do Docker nessa máquina, podendo ser acessada pelo link:
+http://136.248.107.114:8080
+
 ## 🚀 Tecnologias Utilizadas
 
 - **React 19** - Biblioteca JavaScript para construção de interfaces
